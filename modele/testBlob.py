@@ -1,13 +1,12 @@
 # Standard imports
 import cv2
 import numpy as np;
- 
 
 while(True):
     # Read image
-    im = cv2.imread("/assets/circles.jpg")
+    im = cv2.imread("assets/circles.jpg")
     
-    # Set up the detector with default parameters.
+    # Set up the detector with default parameters
     detector = cv2.SimpleBlobDetector()
     
     # Detect blobs.
@@ -25,6 +24,6 @@ while(True):
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-    # When everything done, release the capture
-im.release()
+# When everything done, release the capture
+#im.release()
 cv2.destroyAllWindows()

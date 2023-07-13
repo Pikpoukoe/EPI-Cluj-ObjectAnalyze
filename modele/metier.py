@@ -26,7 +26,7 @@ while (True):
             cv2.circle(frame, (i[0], i[1]), 2, (0, 0, 255), 3)
 
     # Afficher l'image avec les cercles
-    cv2.imshow('frame', gray_blur)
+    cv2.imshow('frame', frame)
 
     # Quitter la boucle si 'q' est pressé
     if cv2.waitKey(1) & 0xFF == ord('q'):
