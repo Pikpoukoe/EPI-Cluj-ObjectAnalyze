@@ -4,9 +4,9 @@ import numpy as np
 # Ouvrir le flux vidéo de la webcam
 cap = cv2.VideoCapture(0)
 
-while (True):
+while cap.isOpened():
     # Capturer une image par image
-    frame = cap.read()
+    ret, frame = cap.read()
     # Convertir l'image en gris
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
