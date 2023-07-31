@@ -8,18 +8,14 @@ rayon_objet = 0  # Initialisation du rayon de l'objet
 while True:
     # Capture de l'image depuis le flux vidéo
     ret, frame = video_capture.read()
-
     # Convertir l'image en niveaux de gris
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
     # Appliquer un flou
     blurred = cv2.GaussianBlur(gray, (15, 15), 0)
-
     # Détecter les contours
     edges = cv2.Canny(blurred, 50, 150)
     circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, 1, 50, param1=200, param2=30, minRadius=5, maxRadius=100)
-
-    # S'il y a des cercles détectés, mesurer le diamètre de l'objet
+    # S'il y a des cercles détectés, mesurer le diamètre de l'objet et montre le cercle
     if circles is not None:
         circles = np.round(circles[0, :]).astype("int")
         for (x, y, r) in circles:
