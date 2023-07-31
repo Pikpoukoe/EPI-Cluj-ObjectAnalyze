@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 video_capture = cv2.VideoCapture(0)  # Indice 0 pour la caméra par défaut
 
-distance_objet = 60  # Distance en cm
+distance_objet = 15  # Distance en cm
 rayon_objet = 0  # Initialisation du rayon de l'objet
 
 while True:
@@ -27,7 +27,7 @@ while True:
             diametre_pixels = 2 * y
 
             # Convertir le diamètre en cm en utilisant la relation de taille connue
-            diametre_cm = (diametre_pixels * distance_objet)
+            diametre_cm = (diametre_pixels / 38)
 
             # Dessiner le cercle sur l'image
             cv2.circle(frame, (x, y), r, (0, 255, 0), 2)
