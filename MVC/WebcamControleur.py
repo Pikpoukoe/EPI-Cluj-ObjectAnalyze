@@ -2,7 +2,6 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import cv2
 
-
 class WebcamModele:
     def __init__(self, video_source=0):
         self.vid = cv2.VideoCapture(video_source)
@@ -34,6 +33,14 @@ class WebcamVue:
         # set maximum window size value
         root.maxsize(1200, 800)
 
+    def frame_left_right(self):
+        # Create left and right frames
+        left_frame = tk.Frame(root, width=200, height=400, bg='grey')
+        left_frame.pack(side='left',  fill='both',  padx=10,  pady=5,  expand=True)
+
+        right_frame = tk.Frame(root,  width=650,  height=400,  bg='grey')
+        right_frame.pack(side='right',  fill='both',  padx=10,  pady=5,  expand=True)
+
 
 class WebcamControleur:
     def __init__(self, root):
@@ -42,6 +49,7 @@ class WebcamControleur:
         self.modele = WebcamModele()
         self.vue = WebcamVue(root)
         self.root.bind('<q>', self.close_windows)
+        self.vue.frame_left_right()
 
         # After it is called once, the update method will be automatically called every delay milliseconds
         self.delay = 15
