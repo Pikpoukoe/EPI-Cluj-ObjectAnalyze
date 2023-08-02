@@ -1,4 +1,4 @@
-import cv2
+"""import cv2
 import numpy as np
 
 video_capture = cv2.VideoCapture(0)  # Indice 0 pour la caméra par défaut
@@ -32,6 +32,10 @@ while True:
             diametre_cm = ((diametre_pixels*15) / (nbPixelsPour1Cm*distance_objet))
             # Afficher le diamètre à côté de l'objet
             cv2.putText(frame, f"Diametre: {diametre_cm:.2f} cm", (x - 70, y - r-15), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(0, 255, 0), 2)
+            # Créer un masque circulaire pour extraire le contenu du cercle
+            cv2.circle(frame, (x, y), r, 255, -1)
+
+
 
     # Afficher l'image avec les cercles détectés et le diamètre
     cv2.imshow("Objet rond", frame)
@@ -41,3 +45,34 @@ while True:
 # Libérer les ressources
 video_capture.release()
 cv2.destroyAllWindows()
+"""
+import cv2
+
+# Ouvrir la capture vidéo à partir de la caméra (0 pour la caméra par défaut)
+video_capture = cv2.VideoCapture(0)
+
+is_paused = False
+
+while True:
+    # Si la lecture n'est pas en pause, lisez une image frame depuis la vidéo
+    if not is_paused:
+        ret, frame = video_capture.read()
+
+        # Assurez-vous que la lecture de la vidéo se déroule correctement
+        if not ret:
+            break
+
+        # Afficher l'image frame (vidéo en temps réel)
+        cv2.imshow('Video en temps réel', frame)
+
+    # Attendre une touche pour décider de mettre en pause ou reprendre la vidéo
+    key = cv2.waitKey(1)
+    if key == ord('p'):
+        is_paused = not is_paused  # Mettre en pause ou reprendre la lecture
+    elif key == ord('q'):
+        break
+
+# Relâchez la capture vidéo et fermez la fenêtre
+video_capture.release()
+cv2.destroyAllWindows()
+
