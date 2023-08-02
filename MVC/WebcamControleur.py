@@ -23,6 +23,15 @@ class WebcamModele:
         if self.vid.isOpened():
             self.vid.release()
 
+    def button_pause_clicked(self):
+        WebcamModele.__init__(self)
+        success, image = WebcamModele.get_frame(self)
+        frame_count = 0
+        while success:
+            cv2.imwrite(f"assets/frame_{frame_count}.jpg", image)
+            success, image = WebcamModele.get_frame(self)
+            frame_count += 1
+
 
 class WebcamVue:
     def __init__(self, root, width=600, height=480):
@@ -33,6 +42,22 @@ class WebcamVue:
         root.minsize(1200, 800)
         # set maximum window size value
         root.maxsize(1200, 800)
+
+        # Create left and right frames
+        self.left_frame = tk.Frame(root, width=500, height=400, bg='lightgrey')
+        self.left_frame.pack(side='left', fill='both', padx=10, pady=5, expand=True)
+
+        self.right_frame = tk.Frame(root, width=500, height=400, bg='lightgrey')
+        self.right_frame.pack(side='right', fill='both', padx=10, pady=5, expand=True)
+
+        self.tool_bar = tk.Frame(self.left_frame, width=50, height=50, bg='grey')
+        self.tool_bar.pack(side='top', fill='both', padx=5, pady=5, expand=False)
+
+    def clicked(self):
+        print("Click")
+
+    def button_pause_view(self):
+        tk.Button(self.tool_bar, text="Pause", command=WebcamModele.button_pause_clicked(self)).pack(padx=5, pady=5)
 
 
 class WebcamControleur:
@@ -53,7 +78,6 @@ class WebcamControleur:
         if ret:
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
             self.vue.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
-
         self.root.after(self.delay, self.update)
 
     def close_windows(self, event=None):
